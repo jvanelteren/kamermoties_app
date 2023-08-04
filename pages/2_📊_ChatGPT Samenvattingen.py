@@ -10,6 +10,7 @@ def load_df():
     filename = 'data/final_summaries.pickle'
     with open(filename, "rb") as f:
         df = pd.read_pickle(f)
+        df = df.sample(frac=1)
         return df['Partij'].unique(), df
     
     
