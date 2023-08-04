@@ -12,7 +12,7 @@ def load_df():
         df = pd.read_pickle(f)
         df = df.sample(frac=1)
         return df['Partij'].unique(), df
-    
+
     
 def get_score():
     score = 0
@@ -27,7 +27,7 @@ def get_score():
                 annotated_text((f"Deze had je niet goed, het was {partij}", '0 punten', "#faa"))
     return round(score * 10)
 
-st.set_page_config(page_title="DataFrame Demo", page_icon="📊")
+st.set_page_config(page_title="ChatGPT Samenvattingen", page_icon="🧠")
 
 st.markdown("# ChatGPT Samenvattingen")
 

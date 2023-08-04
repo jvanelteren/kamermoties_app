@@ -4,3 +4,4 @@ top2vec
 numpy
 altair
 scikit-learn
+annotated_text
