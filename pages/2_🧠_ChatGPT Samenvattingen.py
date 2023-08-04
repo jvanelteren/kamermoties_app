@@ -28,10 +28,8 @@ def get_score():
     return round(score * 10)
 
 st.set_page_config(page_title="ChatGPT Samenvattingen", page_icon="🧠")
-
-st.markdown("# ChatGPT Samenvattingen")
-
 st.sidebar.header("ChatGPT Samenvattingen")
+st.markdown("# ChatGPT Samenvattingen")
 
 st.write(
     """Met ChatGPT kan je samenvatten waar de partijen voor staan aan de hand van de moties die ze hebben ingediend. Lukt het je om de juiste partij bij de samenvatting te vinden?"""

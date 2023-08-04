@@ -101,8 +101,8 @@ def load_df():
     with open(filename,"rb") as f:
         return pd.read_pickle(f)
         # return pickle.load(f)
-# MZPYVGYJ
-# lovely4950
+
+
 def get_stem_column(largest):
     return [c for c in df.columns if 'Stem_' in c and c != 'Stem_persoon' and c[5:] in largest]
 
