@@ -14,18 +14,27 @@ PRODUCTION = False
 NUM_TOPICS = 3
 
 parties = ['VVD',
+ 'BBB',
  'CDA',
  'ChristenUnie',
  'D66',
+ 'Omtzigt',
  'SGP',
  'FVD',
  'PVV',
- '50PLUS',
+ 'Groep Van Haga',
+ 'JA21',
+ 'Volt',
+ 'BIJ1',
  'PvdA',
  'DENK',
  'GroenLinks',
  'SP',
  'PvdD']
+
+
+
+
 
 party_colors = {
   'CDA':'#5cb957',
@@ -41,7 +50,14 @@ party_colors = {
   'DENK':'#17becf',
   'FVD':'#800000',
   'Groep Krol/vKA':'pink',
-  '50PLUS':'#93117e'
+  '50PLUS':'#93117e',
+  'BBB': '#93c01f',
+  'Groep Van Haga': 'brown',
+  'JA21': '#202e76',
+  'Omtzigt': '#4f7cd1',
+  'BIJ1': '#ffff00',
+  'Volt': '#502379'
+      
 }
 st.set_page_config(page_title="StemVinder", page_icon="🔎")
 
@@ -66,7 +82,7 @@ def init():
                 </style>
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
-# init()
+init()
 
 def get_header():
     return Image.open('data/moties.jpg') 
@@ -121,9 +137,7 @@ def get_pca(df, n_components=1, num_largest=None, return_ratio=False):
     return (source, pca.explained_variance_ratio_) if return_ratio else source
 
 def get_df_slice(df):
-
     source = df[(df['Topic_initial'] == selected_topic) & (df['Kamer'] == 'Rutte IV')]
-    st.write('hi', selected_topic, len(source))
     if selected_party != 'Alle partijen':
         source = source[source['Indienende_partij'] == selected_party]
     if selected_year != 'Alle jaren':
@@ -151,9 +165,9 @@ def aantal_moties_chart(df):
     ).configure_axis(
             labelFontSize=14,
             titleFontSize=14,
+            tickMinStep=1,
             grid=False).configure_view(
             strokeWidth=0)
-
 def pca_topic(df, topic):
     # calls pca function and returns graph
     source = df[(df['Topic_initial'] == topic)]
@@ -170,8 +184,8 @@ def pca_topic(df, topic):
     text = points.mark_text(
         align='left',
         baseline='middle',
-        size=18,
-        dx=3,
+        size=16,
+        dx=4,
         dy=0
         # opacity=0.5
     ).encode(
@@ -185,19 +199,19 @@ def pca_topic(df, topic):
         titleFontSize=14,
         grid=False).configure_title(fontSize=66)
 
-    st.write(f'{num_moties} moties, grafiek {round(sum(explained_variance_ratio_)*100)}% betrouwbaar')
+    with st.expander('📘 Uitleg'):
+        st.write(f'{num_moties} moties, grafiek vat {round(sum(explained_variance_ratio_)*100)}% van variatie')
+        st.write(
+            """
+        Deze techniek heet Pricipal Component Analysis en probeert variatie op veel dimensies (in dit geval veel moties)
+        terug te brengen naar minder dimensies (in dit geval twee, een x en een y as). Als je bijvoorbeeld twee partijen hebt die altijd precies tegenovergesteld stemmen dan heb hoef je niet heel veel verschillende moties te visualiseren, maar kan je gewoon de twee tegenover elkaar op één as tekenen.
 
-    st.write(
-        """
-    Deze techniek heet Pricipal Component Analysis en probeert variatie op veel dimensies (in dit geval veel moties)
-    terug te brengen naar minder dimensies (in dit geval twee, een x en een y as). Als je bijvoorbeeld twee partijen hebt die altijd precies tegenovergesteld stemmen dan heb hoef je niet heel veel verschillende moties te visualiseren, maar kan je gewoon de twee tegenover elkaar op één as tekenen.
-
-    De afstand tussen twee partijen geeft aan hoe verschillend ze stemmen. 
-    Het betrouwbaarheid percentage geeft aan hoeveel van de variatie in het stemgedrag wordt verklaard door de grafiek. Hoe lager dit is des te minder waarde je eraan moet hechten. 
-    
-    Een voorbeeld: stel dat twee partijen precies op hetzelfde punt staan, dan betekent dit bij een betrouwbaarheid van 100% dat ze identiek stemmen. Maar als het percentage 50% is betekent dat er nog steeds flink wat variatie is in het stemgedrag is dat niet wordt verklaard door de grafiek.
-        """
-    )
+        De afstand tussen twee partijen geeft aan hoe verschillend ze stemmen. 
+        Het percentage geeft aan hoeveel van de variatie in het stemgedrag wordt verklaard door de grafiek. Hoe lager dit is des te minder waarde je eraan moet hechten. 
+        
+        Een voorbeeld: stel dat twee partijen precies op hetzelfde punt staan, dan betekent dit bij een betrouwbaarheid van 100% dat ze identiek stemmen. Maar als het percentage 50% is betekent dat er nog steeds flink wat variatie is in het stemgedrag is dat niet wordt verklaard door de grafiek.
+            """
+        )
     return chart
 
 
@@ -213,29 +227,30 @@ if search_term != '':
     error = False
     try:
         topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split() , num_topics=NUM_TOPICS, reduced=True)
-        topic_options = [' '.join(word for word in topic[:1]) for topic in topic_words]
+        topic_options = [', '.join(word for word in topic[:3]) for topic in topic_words]
     except Exception as e:
         st.write(e,'(Een van de) woorden komt niet voor in de ingediende moties. Probeer opnieuw')
         error = True
 
     if not error:
         st.markdown(f'## **Moties die het beste passen bij {search_term}**')
+        with st.expander('📘 Uitleg'):
        
-        st.write(
-            """
-        Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in bijna 250 onderwerpen.
-        Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: pijltje linksboven klikken).
+            st.write(
+                """
+            Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in bijna 250 onderwerpen.
+            Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: pijltje linksboven klikken).
 
-        Per onderwerp worden de woorden weergegeven die het meest onderscheidend zijn.
-        Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, maar met de filters links kan je dit aanpassen. 
-        Lees de woorden door dan krijg je een idee wat er met het onderwerp ongeveer bedoeld wordt.
-            """
-        )
-        # st.text=()
-        empties = []
-        for i in range(NUM_TOPICS):
-            st.write('Onderwerp',i+1, '(beste match)' if i==0 else "")
-            empties.append(st.empty())
+            Per onderwerp worden de woorden weergegeven die het meest onderscheidend zijn.
+            Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, maar met de filters links kan je dit aanpassen. 
+            Lees de woorden door dan krijg je een idee wat er met het onderwerp ongeveer bedoeld wordt.
+                """
+            )
+            # st.text=()
+            empties = []
+            for i in range(NUM_TOPICS):
+                st.write('Onderwerp',i+1, '(beste match)' if i==0 else "")
+                empties.append(st.empty())
     
         # ADD SIDEBAR
         st.sidebar.markdown('Gebruik deze filters om verder te filteren. De grafieken en moties updaten vanzelf')
@@ -248,7 +263,9 @@ if search_term != '':
         # DETERMINE SELECTED TOPIC
         selected_topic_idx = topic_options.index(selected_topic)
         assert selected_topic_idx in [0,1,2]
-        selected_topic = topic_words[selected_topic_idx][0]
+        selected_topic = ', '.join(topic_words[selected_topic_idx][:3])
+        
+        print(selected_topic)
 
         # UPDATE TOPIC DESCRIPTIONS
         for i in range(NUM_TOPICS):
@@ -284,7 +301,8 @@ if search_term != '':
                 tegen = f"Tegen: {', '.join(df.loc[motie_id,'Partijen_Tegen'])}"
                 summary = f"Ingediend door {df.loc[motie_id,'Indienende_persoon_partij']}"
 
-                st.text_area('', df.loc[motie_id,'Text'], height=500, key=i)
+                st.text_area('Motie inhoud', df.loc[motie_id,'Text'], height=500, key=i)
+                
                 st.write(summary, '  \n', result, '  \n', voor, '  \n', tegen)
         else:
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
