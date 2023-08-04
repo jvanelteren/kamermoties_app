@@ -1,0 +1,6 @@
+pandas
+streamlit
+top2vec
+numpy
+altair
+scikit-learn
