@@ -7,7 +7,7 @@ st.set_page_config(
 
 st.write("# Welcome bij de StemVinder! 👋")
 
-st.sidebar.success("Kies je tool")
+
 
 st.markdown(
     """

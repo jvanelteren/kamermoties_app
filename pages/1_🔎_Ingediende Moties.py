@@ -257,7 +257,7 @@ if search_term != '':
         selected_topic = st.sidebar.radio("Onderwerp: ", (topic_options), key=6)
         selected_soort = st.sidebar.radio("Motie uitkomst: ", (['Aangenomen en verworpen','Aangenomen', 'Verworpen']), key=7)
         selected_party = st.sidebar.radio("Indienende partij: ", (['Alle partijen'] + sorted(parties)), key=8)
-        selected_year= st.sidebar.radio("Ingediend in: ", (['Alle jaren'] + ['2020', '2021', '2022', '2023']), key=9)
+        selected_year= st.sidebar.radio("Ingediend in: ", (['Alle jaren'] + ['2021', '2022', '2023']), key=9)
         max_moties = st.sidebar.slider('maximaal aantal weergegeven moties', 0, 20,5)
 
         # DETERMINE SELECTED TOPIC
