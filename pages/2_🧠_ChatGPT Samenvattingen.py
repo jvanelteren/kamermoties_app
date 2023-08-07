@@ -78,7 +78,7 @@ else:
         colors = []
         # for _, (partij, summary, n_moties, motie_samenvattingen) in df[:2].iterrows():
         for partij, summary in zip(st.session_state['test_partijen'], st.session_state['test_summaries']):
-            st.write(st.session_state['seen'])
+            # st.write(st.session_state['seen'])
             
             choices.append(st.multiselect(
                 "Welke partij is dit?", partijen, key=partij
