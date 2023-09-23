@@ -15,7 +15,7 @@ NUM_TOPICS = 3
 
 from data.parameters import party_colors, parties
 
-st.set_page_config(page_title="Moties per onderwerp", initial_sidebar_state='auto', page_icon="🔎")
+st.set_page_config(page_title="Moties per onderwerp", initial_sidebar_state='expanded', page_icon="🔎")
 
 
 def init():
@@ -172,9 +172,10 @@ def pca_topic(df, topic):
 model = load_model()
 df = load_df()
 
+st.session_state.sidebar_state = 'expanded'
 
 search_term = st.text_input('Kies je zoekterm(en)', '')
-st.write('tst4')
+st.write('tst5')
 # select relevant topic topic
 if search_term != '':
     error = False
@@ -260,4 +261,4 @@ if search_term != '':
         else:
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
         # st.experimental_rerun()
-# st.sidebar.markdown('')
+st.session_state.sidebar_state = 'expanded'
