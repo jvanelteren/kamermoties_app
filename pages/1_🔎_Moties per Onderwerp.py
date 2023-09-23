@@ -179,7 +179,6 @@ st.session_state.sidebar_state = 'expanded'
 search_term = st.text_input('Kies je zoekterm(en)', '')
 # select relevant topic topic
 if search_term != '':
-    st.write('search')
     error = False
     try:
         topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split(), num_topics=NUM_TOPICS, reduced=False)
@@ -194,8 +193,7 @@ if search_term != '':
        
             st.write(
                 """
-            Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in 82 onderwerpen.
-            Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: pijltje linksboven klikken).
+            Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: scherm kantelen en pijltje linksboven klikken).
 
             Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, met de filters links kan je dit aanpassen. 
                 """
