@@ -11,9 +11,11 @@ st.write("# Welkom bij de MotieMachine! 👋")
 
 st.markdown(
     """
-    De afgelopen kamerperiode zijn er meer dan 9000 moties behandeld. Links vindt je enkele tools om deze te analyseren.
+    De afgelopen kamerperiode zijn er meer dan 9000 moties behandeld. Ik heb hier een 🔎tool voor gemaakt en enkele 📚 blogs over geschreven. Ook komt er nog een 🧠 ChatGPT analyse bij.
     
-    **👈 Kies je tool om te beginnen!**
+    **👈 Kies linksboven om de tool te starten **
+    
+    
     
     
     ### Dank gaat uit naar
