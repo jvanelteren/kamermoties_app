@@ -38,9 +38,9 @@ def init():
     """,
     unsafe_allow_html=True
 )
-init()
 
 st.set_page_config(page_title="Moties per onderwerp",  page_icon="🔎")
+init()
 
 @st.cache_data
 def get_header():
