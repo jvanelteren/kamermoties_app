@@ -175,9 +175,10 @@ df = load_df()
 st.session_state.sidebar_state = 'expanded'
 
 search_term = st.text_input('Kies je zoekterm(en)', '')
-st.write('tst5')
+st.write('tst6')
 # select relevant topic topic
 if search_term != '':
+    st.write('search')
     error = False
     try:
         topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split(), num_topics=NUM_TOPICS, reduced=False)
@@ -188,21 +189,21 @@ if search_term != '':
 
     if not error:
         st.markdown(f'## **Moties die het beste passen bij {search_term}**')
-        with st.expander('📘 Uitleg'):
+        # with st.expander('📘 Uitleg'):
        
-            st.write(
-                """
-            Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in 82 onderwerpen.
-            Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: pijltje linksboven klikken).
+        #     st.write(
+        #         """
+        #     Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in 82 onderwerpen.
+        #     Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: pijltje linksboven klikken).
 
-            Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, met de filters links kan je dit aanpassen. 
-                """
-            )
-            # st.text=()
-            empties = []
-            for i in range(NUM_TOPICS):
-                st.write('Onderwerp',i+1, '(beste match)' if i==0 else "")
-                empties.append(st.empty())
+        #     Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, met de filters links kan je dit aanpassen. 
+        #         """
+        #     )
+        #     # st.text=()
+        #     empties = []
+        #     for i in range(NUM_TOPICS):
+        #         st.write('Onderwerp',i+1, '(beste match)' if i==0 else "")
+        #         empties.append(st.empty())
     
         # ADD SIDEBAR
         
@@ -262,3 +263,4 @@ if search_term != '':
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
         # st.experimental_rerun()
 st.session_state.sidebar_state = 'expanded'
+st.write('no')
