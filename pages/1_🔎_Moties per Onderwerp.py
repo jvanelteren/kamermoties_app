@@ -40,7 +40,7 @@ def init():
     unsafe_allow_html=True
 )
 init()
-
+@st.cache_data
 def get_header():
     return Image.open('data/moties.jpg') 
 
@@ -174,7 +174,7 @@ df = load_df()
 
 
 search_term = st.text_input('Kies je zoekterm(en)', '')
-st.write('tst2')
+st.write('tst3')
 # select relevant topic topic
 if search_term != '':
     error = False
@@ -259,4 +259,5 @@ if search_term != '':
                 st.write(summary, '  \n', result, '  \n', voor, '  \n', tegen)
         else:
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
+        # st.experimental_rerun()
 # st.sidebar.markdown('')
