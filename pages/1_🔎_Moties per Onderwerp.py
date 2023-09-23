@@ -15,7 +15,7 @@ NUM_TOPICS = 3
 
 from data.parameters import party_colors, parties
 
-st.set_page_config(page_title="Moties per onderwerp", page_icon="🔎")
+st.set_page_config(page_title="Moties per onderwerp", initial_sidebar_state='auto', page_icon="🔎")
 
 
 def init():
@@ -39,7 +39,7 @@ def init():
     """,
     unsafe_allow_html=True
 )
-# init()
+init()
 
 def get_header():
     return Image.open('data/moties.jpg') 
@@ -174,10 +174,9 @@ df = load_df()
 
 
 search_term = st.text_input('Kies je zoekterm(en)', '')
-st.write('tst')
+st.write('tst2')
 # select relevant topic topic
 if search_term != '':
-    st.sidebar.markdown('Gebruik deze filters om verder te filteren. De grafieken en moties updaten vanzelf')
     error = False
     try:
         topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split(), num_topics=NUM_TOPICS, reduced=False)
@@ -205,12 +204,13 @@ if search_term != '':
                 empties.append(st.empty())
     
         # ADD SIDEBAR
-        
-        selected_topic = st.sidebar.radio("Onderwerp: ", (topic_options), key=6)
-        selected_soort = st.sidebar.radio("Motie uitkomst: ", (['Aangenomen en verworpen','Aangenomen', 'Verworpen']), key=7)
-        selected_party = st.sidebar.radio("Indienende partij: ", (['Alle partijen'] + sorted(parties)), key=8)
-        selected_year= st.sidebar.radio("Ingediend in: ", (['Alle jaren'] + ['2021', '2022', '2023']), key=9)
-        max_moties = st.sidebar.slider('maximaal aantal weergegeven moties', 0, 20,5)
+        with st.sidebar:
+            st.sidebar.markdown('Gebruik deze filters om verder te filteren. De grafieken en moties updaten vanzelf')
+            selected_topic = st.sidebar.radio("Onderwerp: ", (topic_options), key=6)
+            selected_soort = st.sidebar.radio("Motie uitkomst: ", (['Aangenomen en verworpen','Aangenomen', 'Verworpen']), key=7)
+            selected_party = st.sidebar.radio("Indienende partij: ", (['Alle partijen'] + sorted(parties)), key=8)
+            selected_year= st.sidebar.radio("Ingediend in: ", (['Alle jaren'] + ['2021', '2022', '2023']), key=9)
+            max_moties = st.sidebar.slider('maximaal aantal weergegeven moties', 0, 20,5)
 
         # DETERMINE SELECTED TOPIC
         selected_topic_idx = topic_options.index(selected_topic)
