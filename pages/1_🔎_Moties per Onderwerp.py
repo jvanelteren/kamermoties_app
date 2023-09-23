@@ -135,7 +135,7 @@ def pca_topic(df, topic):
     points = alt.Chart(source,width= width, height = width * y_scale_ratio).mark_point().encode(
     x=alt.X('x:Q', axis=None),
     y=alt.Y('y:Q', axis=None),
-    color=alt.Color("partij", scale = alt.Scale(domain=parties,range= [party_colors[p] for p in parties]), legend=None)
+    color=alt.Color("partij", scale = alt.Scale(domain=parties,range= [party_colors[p] for p in parties]), legend=None),
     )
 
     text = points.mark_text(
@@ -143,8 +143,8 @@ def pca_topic(df, topic):
         baseline='middle',
         size=16,
         dx=4,
-        dy=0
-        # opacity=0.5
+        dy=0,
+        opacity=0.9
     ).encode(
         text='partij:N'
     ).transform_calculate(x='datum.x+ random()*0.1',y='datum.y+ (random()-0.5)*0.3')

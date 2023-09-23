@@ -17,7 +17,7 @@ party_colors = {
   'Groep Van Haga': 'brown',
   'JA21': '#202e76',
   'Omtzigt': '#4f7cd1',
-  'BIJ1': '#ffff00',
+  'BIJ1': '#d5d520',
   'Volt': '#502379'
       
 }
@@ -36,10 +36,10 @@ parties = [
   'DENK',
   'FVD',
   'BBB',
-  # 'Groep Van Haga',
+  'Groep Van Haga',
   'JA21',
-  # 'Omtzigt',
-  # 'BIJ1',
+  'Omtzigt',
+  'BIJ1',
   'Volt']
 
 
