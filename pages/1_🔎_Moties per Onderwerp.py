@@ -181,7 +181,7 @@ if search_term != '':
         topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split(), num_topics=NUM_TOPICS, reduced=False)
         topic_options = [', '.join(word for word in topic[:3]) for topic in topic_words]
     except Exception as e:
-        st.write(e,'(Een van de) woorden komt niet voor in de ingediende moties. Probeer opnieuw')
+        st.error('Het woord komt niet voor in de ingediende moties', icon="🚨")
         error = True
 
     if not error:
