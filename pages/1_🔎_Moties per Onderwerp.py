@@ -174,9 +174,10 @@ df = load_df()
 
 
 search_term = st.text_input('Kies je zoekterm(en)', '')
-
+st.write('tst')
 # select relevant topic topic
 if search_term != '':
+    st.sidebar.markdown('Gebruik deze filters om verder te filteren. De grafieken en moties updaten vanzelf')
     error = False
     try:
         topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split(), num_topics=NUM_TOPICS, reduced=False)
@@ -204,7 +205,7 @@ if search_term != '':
                 empties.append(st.empty())
     
         # ADD SIDEBAR
-        st.sidebar.markdown('Gebruik deze filters om verder te filteren. De grafieken en moties updaten vanzelf')
+        
         selected_topic = st.sidebar.radio("Onderwerp: ", (topic_options), key=6)
         selected_soort = st.sidebar.radio("Motie uitkomst: ", (['Aangenomen en verworpen','Aangenomen', 'Verworpen']), key=7)
         selected_party = st.sidebar.radio("Indienende partij: ", (['Alle partijen'] + sorted(parties)), key=8)
