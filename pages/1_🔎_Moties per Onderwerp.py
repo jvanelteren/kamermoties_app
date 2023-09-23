@@ -38,7 +38,7 @@ def init():
                 footer {visibility: hidden;}
                 </style>
                 """
-    # st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 init()
 
 def get_header():
@@ -59,10 +59,11 @@ def intro():
     #         3. Wat de meest relevante moties zijn
     #         """)
 intro()
-
+@st.cache_data
 def load_model():
     return Top2Vec.load("data/doc2vec_production")
 
+@st.cache_data
 def load_df():
     filename = 'data/df_production.pickle'
     with open(filename,"rb") as f:
@@ -257,3 +258,4 @@ if search_term != '':
                 st.write(summary, '  \n', result, '  \n', voor, '  \n', tegen)
         else:
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
+st.sidebar.markdown('')
