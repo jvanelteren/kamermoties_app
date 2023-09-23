@@ -15,7 +15,6 @@ NUM_TOPICS = 3
 
 from data.parameters import party_colors, parties
 
-st.set_page_config(page_title="Moties per onderwerp",  page_icon="🔎")
 
 
 def init():
@@ -40,6 +39,9 @@ def init():
     unsafe_allow_html=True
 )
 init()
+
+st.set_page_config(page_title="Moties per onderwerp",  page_icon="🔎")
+
 @st.cache_data
 def get_header():
     return Image.open('data/moties.jpg') 
