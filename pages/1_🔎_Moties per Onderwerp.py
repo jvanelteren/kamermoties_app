@@ -40,7 +40,7 @@ def init():
 )
 
 st.set_page_config(page_title="Moties per onderwerp",  page_icon="🔎")
-init()
+# init()
 
 @st.cache_data
 def get_header():
