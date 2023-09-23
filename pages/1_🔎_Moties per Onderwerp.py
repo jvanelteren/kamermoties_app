@@ -38,7 +38,7 @@ def init():
                 footer {visibility: hidden;}
                 </style>
                 """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+    # st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 init()
 
 def get_header():
@@ -51,18 +51,12 @@ def intro():
     # with st.beta_expander("⚙️ - Introductie ", expanded=False):
     #     st.markdown(
     #         """
-    #         Wat vind jij belangrijk bij de verkiezingen? Deze app heeft met machine learning alle moties van afgelopen Tweede Kamerperiode geclusterd in 247 onderwerpen. De app matcht jouw zoekterm(en) aan gelijksoortige onderwerpen. 
+    #         Wat vind jij belangrijk bij de verkiezingen? Deze app heeft met machine learning alle moties van afgelopen Tweede Kamerperiode geclusterd in 82 onderwerpen. De app matcht jouw zoekterm(en) aan gelijksoortige onderwerpen. 
     #         Zo kan je er snel achterkomen hoe partijen hebben gestemd op wat jij belangrijk vindt. Per onderwerp zie je:
             
     #         1. Hoeveel moties partijen hebben ingediend
     #         2. Hoe partijen hebben gestemd
     #         3. Wat de meest relevante moties zijn
-
-    #         Als je dit interessant vindt is er nog meer leesvoer:
-    #         * [Blog 1](https://jvanelteren.github.io/blog/2021/02/20/kamermotiesEDA.html) over trends
-    #         * [Blog 2](https://jvanelteren.github.io/blog/2021/03/07/kamermoties_topics.html) over de inhoud van de moties
-
-    #         Veel plezier ermee en succes met stemmen 17 maart!
     #         """)
 intro()
 
@@ -95,6 +89,7 @@ def get_pca(df, n_components=1, num_largest=None, return_ratio=False):
 
 def get_df_slice(df):
     source = df[(df['Topic_initial'] == selected_topic) & (df['Kamer'] == 'Rutte IV')]
+
     if selected_party != 'Alle partijen':
         source = source[source['Indienende_partij'] == selected_party]
     if selected_year != 'Alle jaren':
@@ -157,7 +152,7 @@ def pca_topic(df, topic):
         grid=False).configure_title(fontSize=66)
 
     with st.expander('📘 Uitleg'):
-        st.write(f'{num_moties} moties, grafiek vat {round(sum(explained_variance_ratio_)*100)}% van variatie')
+        st.write(f'{num_moties} moties, grafiek vat {round(sum(explained_variance_ratio_)*100)}% van variatie in stemgedrag')
         st.write(
             """
         Deze techniek heet Pricipal Component Analysis en probeert variatie op veel dimensies (in dit geval veel moties)
@@ -183,7 +178,7 @@ search_term = st.text_input('Kies je zoekterm(en)', '')
 if search_term != '':
     error = False
     try:
-        topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split() , num_topics=NUM_TOPICS, reduced=False)
+        topic_words, word_scores, topic_scores, topic_nums = model.search_topics(keywords= search_term.split(), num_topics=NUM_TOPICS, reduced=False)
         topic_options = [', '.join(word for word in topic[:3]) for topic in topic_words]
     except Exception as e:
         st.write(e,'(Een van de) woorden komt niet voor in de ingediende moties. Probeer opnieuw')
@@ -195,12 +190,10 @@ if search_term != '':
        
             st.write(
                 """
-            Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in bijna 250 onderwerpen.
+            Het Top2Vec algoritme heeft moties (op basis van de woorden) automatisch geclustert in 82 onderwerpen.
             Met het menu aan de linkerkant kan je verder filteren (voor mobiele gebruikers: pijltje linksboven klikken).
 
-            Per onderwerp worden de woorden weergegeven die het meest onderscheidend zijn.
-            Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, maar met de filters links kan je dit aanpassen. 
-            Lees de woorden door dan krijg je een idee wat er met het onderwerp ongeveer bedoeld wordt.
+            Hieronder zie je de drie onderwerpen die het beste bij je zoekterm passen. Standaard kiest het model de eerste best passende onderwerp, met de filters links kan je dit aanpassen. 
                 """
             )
             # st.text=()
@@ -226,7 +219,7 @@ if search_term != '':
 
         # UPDATE TOPIC DESCRIPTIONS
         for i in range(NUM_TOPICS):
-            topic_description = ', '.join(word for word in topic_words[i][:20])
+            topic_description = ', '.join(word for word in topic_words[i][:10])
             if i == selected_topic_idx:
                 topic_description = f"**{topic_description}**"
             empties[i].markdown(topic_description)
@@ -253,7 +246,8 @@ if search_term != '':
 
             for i in range(min(max_moties, len(source))):
                 motie_id = topic_moties[i]
-                result = f"Resultaat: {df.loc[motie_id,'BesluitTekst']}"
+                res = '✅' if df.loc[motie_id,'BesluitTekst'] == 'Aangenomen' else '❌'
+                result = f"Resultaat: {res} {df.loc[motie_id,'BesluitTekst']}"
                 voor = f"Voor: {', '.join(df.loc[motie_id,'Partijen_Voor'])}"
                 tegen = f"Tegen: {', '.join(df.loc[motie_id,'Partijen_Tegen'])}"
                 summary = f"Ingediend door {df.loc[motie_id,'Indienende_persoon_partij']}"
@@ -263,4 +257,3 @@ if search_term != '':
                 st.write(summary, '  \n', result, '  \n', voor, '  \n', tegen)
         else:
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
-

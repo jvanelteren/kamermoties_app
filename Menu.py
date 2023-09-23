@@ -13,7 +13,7 @@ st.markdown(
     """
     De afgelopen kamerperiode zijn er meer dan 9000 moties behandeld. Ik heb hier een 🔎tool voor gemaakt en enkele 📚 blogs over geschreven. Ook komt er nog een 🧠 ChatGPT analyse bij.
     
-    **👈 Kies linksboven om de tool te starten **
+    ** 👈 Kies linksboven om de tool te starten **
     
     
     
