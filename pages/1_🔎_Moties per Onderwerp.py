@@ -10,7 +10,6 @@ import os
 import re
 from PIL import Image
 
-PRODUCTION = False
 NUM_TOPICS = 3
 
 
@@ -20,17 +19,6 @@ st.set_page_config(page_title="Moties per onderwerp", page_icon="🔎")
 
 
 def init():
-    # insert plausible code into head of index.html
-    # if PRODUCTION:
-    #     code = """<script async defer data-domain="stemvinder.ew.r.appspot.com" src="https://plausible.io/js/plausible.js"></script>"""
-    #     a=os.path.dirname(st.__file__)+'/static/index.html'
-    #     with open(a, 'r') as f:
-    #         data=f.read()
-    #         if len(re.findall('plausible', data))==0:
-    #             with open(a, 'w') as ff:
-    #                 newdata=re.sub('<head>','<head>'+code,data)
-    #                 ff.write(newdata)
-
     # hide hamburger menu
     hide_streamlit_style = """
                 <style>
@@ -39,7 +27,19 @@ def init():
                 </style>
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
-init()
+    st.markdown(
+    """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+# init()
 
 def get_header():
     return Image.open('data/moties.jpg') 
@@ -258,4 +258,4 @@ if search_term != '':
                 st.write(summary, '  \n', result, '  \n', voor, '  \n', tegen)
         else:
             st.markdown(f'## Geen moties gevonden (staan er filters aan?)')
-st.sidebar.markdown('')
+# st.sidebar.markdown('')
