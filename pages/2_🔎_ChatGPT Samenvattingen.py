@@ -55,21 +55,23 @@ st.image(i , use_column_width=True)
 with st.expander('📘 Uitleg'):
     st.markdown(
         """
-    Eerst heb ik alle 9000 moties samengevat door ChatGPT 3.5 tot enkele zinnen. Daarna zijn per partij alle moties aan elkaar vastgeplakt en heb ik aan ChatGPT 4 gevraagd om een samenvatting te geven waar de partij voor staat. Een aantal partijen had teveel moties ingediend, hier heb ik een willekeurige steekproef genomen van een aantal moties.
+    Eerst heb ik alle 9000 moties samengevat met ChatGPT 3.5 tot enkele zinnen. Daarna per partij alle samenvattingen aan elkaar vastgeplakt en aan ChatGPT 4 gevraagd om een samenvatting te geven waar de partij voor staat.
     
-    De prompt voor de samenvatting:
+    Blijf altijd kritisch op de samenvattingen. ChatGPT neemt de argumentaties van partijen klakkeloos aan. Bijvoorbeeld een motie als 'meer veeteelt in Nederland want dat is goed voor natuur en milieu', zal door ChatGPT wordt geïnterpreteerd als een partij is die voor duurzaamheid staat.
+      
+    De prompt die ik heb gebruikt voor de motie samenvattingen:
     
     *"Je bent heel goed in het samenvatten van moties. Je vat moties samen in maximaal 2 zinnen. Dat de Kamer de regering verzoekt laat je weg."*
     
-    De prompt voor de principes:
+    De prompt die ik heb gebruikt voor de principes:
     
     *"Je bent een uitstekende politiek analyst die met eenvoudige woorden kan uitleggen waar een politieke partij voor staat. De input zijn samenvattingen van moties ingediend door de partij, gescheiden door '|'. Je geeft in maximaal 3 begrijpelijke zinnen aan wat de principes van de partij zijn. De laatste zin bevat enkel 5 kernprincipes, gescheiden door komma's"*
     
+     Een aantal partijen had zoveel moties ingediend dat het teveel werd voor ChatGPT, hier heb ik een willekeurige steekproef genomen van alle ingediende moties. Bij de drie grote regeringspartijen ging dit om ongeveer 63% van alle moties. Bij bijna alle andere partijen kon ik 90-100% van de moties meenemen.
     
-    
-    Twee bronnen:
-    * Pandas dataframe met samenvattingen per moties
-    * Pandas dataframe met input voor de principes
+    Twee bronnen als je verder wilt graven:
+    * [Excel bestand met de samenvattingen voor de principes](https://github.com/jvanelteren/kamermoties_app/raw/main/data/final_summaries_full_kamer.xlsx)
+    * [Excel bestand met de samenvattingen van alle moties (kolum PY)](https://github.com/jvanelteren/kamermoties_app/raw/main/data/motie_samenvattingen.xlsx)
         """
     )
 
