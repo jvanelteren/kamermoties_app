@@ -71,7 +71,7 @@ with st.expander('📘 Uitleg'):
     
     Twee bronnen als je verder wilt graven:
     * [Excel bestand met de samenvattingen voor de principes](https://github.com/jvanelteren/kamermoties_app/raw/main/data/final_summaries_full_kamer.xlsx)
-    * [Excel bestand met de samenvattingen van alle moties (kolum PY)](https://github.com/jvanelteren/kamermoties_app/raw/main/data/motie_samenvattingen.xlsx)
+    * [Excel bestand met de samenvattingen van alle moties (kolom FV)](https://github.com/jvanelteren/kamermoties_app/raw/main/data/motie_samenvattingen.xlsx)
         """
     )
 
